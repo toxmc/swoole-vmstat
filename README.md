@@ -36,7 +36,6 @@
 
 1. 打开页面如下所示
 ![one](https://raw.githubusercontent.com/smalleyes/swoole-vmstat/master/doc/vmstat-web.png)
-2. This is a data query comparison test
 ![two](https://raw.githubusercontent.com/smalleyes/swoole-vmstat/master/doc/vmstat-web1.png)
 
 ## nginx配置文件
