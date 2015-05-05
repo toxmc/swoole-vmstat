@@ -32,7 +32,7 @@
 	3. 修改web目录下stats.js代码 var ws = new ReconnectingWebSocket("ws://192.168.1.10:8888"); 改成服务器的IP
 	4. 用浏览器打开web目录下的index.html
 
-## Comparison test
+## 运行结果
 
 1. 打开页面如下所示
 ![one](https://raw.githubusercontent.com/smalleyes/swoole-vmstat/master/doc/vmstat-web.png)
