@@ -33,7 +33,7 @@ var descriptions = {
 
 function streamStats() {
 
-    var ws = new ReconnectingWebSocket("ws://"+document.domain+":8888");
+    var ws = new ReconnectingWebSocket("ws://192.168.1.10:8888");
     var lineCount;
     var colHeadings;
 
