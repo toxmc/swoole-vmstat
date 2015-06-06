@@ -6,10 +6,11 @@
  * 2015-5-5
  */
 
-const vmstat_path = '/usr/bin/vmstat'; //vmstat命令绝对路径
-const vmstat_params = array(1,1000000000); //vmstat 命令参数。格式vmstat part1 part2
-const host = "0.0.0.0";	//代表监听全部地址 
-const port = 8888;	//监听端口号
+$vmstat_path = '/usr/bin/vmstat'; //vmstat命令绝对路径
+$interval = 1; //vmstat 命令参数。指定每个报告之间的时间量
+$count = 1000000000; //vmstat 命令参数。决定生成的报告数目和相互间隔的秒数
+$host = "0.0.0.0";	//代表监听全部地址 
+$port = 8888;	//监听端口号
 
 /**
  * MasterPid命令时格式化输出
@@ -27,7 +28,15 @@ $_maxWorkerPidLength = 12;
  * 创建一个websocket服务器
  * 端口8888
  */
-$server = new swoole_websocket_server(host, port);
+$table = new swoole_table(1024);
+$table->column('cmd', swoole_table::TYPE_STRING, 32);
+$table->column('interval', swoole_table::TYPE_INT, 2);
+$table->column('count', swoole_table::TYPE_STRING, 10);
+$table->create();
+$table->set('vmstat', array('cmd' => $vmstat_path,'interval' => $interval, 'count' => $count));
+
+$server = new swoole_websocket_server($host, $port);
+$server->table = $table;	//将table保存在serv对象上
 
 /**
  * 创建一个子进程
@@ -77,7 +86,12 @@ $server->on('start', function ($serv) use($_maxMasterPidLength, $_maxManagerPidL
  * @param swoole_process $worker
  */
 function callback_vmstat(swoole_process $worker) {
-	$worker->exec(vmstat_path, vmstat_params);
+	global $table;
+	$vmstat = $table->get('vmstat');
+	$cmd  = $vmstat['cmd'];
+	$interval = $vmstat['interval'];
+	$count = $vmstat['count'];
+	$worker->exec($cmd, array($interval, $count));
 }
 
 /**
