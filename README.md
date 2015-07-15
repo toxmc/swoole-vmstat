@@ -7,7 +7,7 @@
 
 * PHP 5.3+
 * Swoole 1.7.16
-* Linux, OS X and basic Windows support (Thinks to cygwin)
+* Linux, OS X and basic Windows support (Thanks to cygwin)
 
 ## 安装 Swoole扩展
 
