@@ -52,6 +52,7 @@ $server->set (array(
 		'worker_num' => 1,		//worker进程数量
 		'daemonize' => false,	//守护进程设置成true
 		'max_request' => 1000,	//最大请求次数，当请求大于它时，将会自动重启该worker
+		'log_file' => '/log/swoole.log', //指定swoole错误日志文件
 		'dispatch_mode' => 1
 ));
 
