@@ -33,7 +33,7 @@ var descriptions = {
 
 function streamStats() {
 
-    var ws = new ReconnectingWebSocket("ws://192.168.1.10:8888");
+    var ws = new ReconnectingWebSocket("ws://192.168.1.103:8888");
     var lineCount;
     var colHeadings;
 
@@ -56,12 +56,16 @@ function streamStats() {
                 break;
 
             default: // subsequent lines
-                var colValues = e.data.trim().split(/ +/);
-                var stats = {};
-                for (var i = 0; i < colHeadings.length; i++) {
-                    stats[colHeadings[i]] = parseInt(colValues[i]);
-                }
-                receiveStats(stats);
+            	if (e.data == 'ping') {
+            		ws.send('pong');
+            	} else {
+            		var colValues = e.data.trim().split(/ +/);
+                    var stats = {};
+                    for (var i = 0; i < colHeadings.length; i++) {
+                        stats[colHeadings[i]] = parseInt(colValues[i]);
+                    }
+                    receiveStats(stats);
+            	}
         }
     };
 }
