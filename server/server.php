@@ -179,10 +179,13 @@ $server->on('message', function (swoole_websocket_server $server, $frame) {
 // 	echo "receive from {$frame->fd}:{$frame->data},opcode:{$frame->opcode},fin:{$frame->finish}\n";
 // 	$server->push($frame->fd, "this is server");
     if ($frame->data == 'pong') {
-//         echo "接收pong包\n";
+         echo "接收pong包\n";
     }
 });
 
+/**
+ * websocket server继承于http server所以也可以处理http请求，这里用来处理静态文件
+ */
 $server->on('request', function (swoole_http_request $request, swoole_http_response $response) {
     $uri = $request->server['request_uri'] ?? null;
     $blackList = ['php', 'htaccess', 'config'];
