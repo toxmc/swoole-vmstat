@@ -33,7 +33,7 @@ var descriptions = {
 
 function streamStats() {
 
-    var ws = new ReconnectingWebSocket("ws://192.168.1.103:8888");
+    var ws = new ReconnectingWebSocket("ws://127.0.0.1:8888");
     var lineCount;
     var colHeadings;
 
@@ -47,6 +47,7 @@ function streamStats() {
     };
 
     ws.onmessage = function(e) {
+        console.log(e.data);
         switch (lineCount++) {
             case 0: // ignore first line
                 break;
