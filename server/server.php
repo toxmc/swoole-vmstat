@@ -191,6 +191,8 @@ $server->on('request', function (swoole_http_request $request, swoole_http_respo
     $blackList = ['php', 'htaccess', 'config'];
     $extension = substr(strrchr($uri, '.'), 1);
     if ($extension && in_array($extension, $blackList)) {
+        $response->status(403);
+        $response->end("403 Forbidden");
         return;
     }
 
@@ -202,6 +204,8 @@ $server->on('request', function (swoole_http_request $request, swoole_http_respo
     $publicPath = dirname(__DIR__)."/web";
     $filename = $publicPath . $uri;
     if (! is_file($filename) || filesize($filename) === 0) {
+        $response->status(404);
+        $response->end("404 Not Found");
         return;
     }
     $response->status(200);
